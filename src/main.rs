@@ -43,7 +43,7 @@ async fn indexjs_get() -> impl IntoResponse {
         .unwrap()
 }
 
-#[axum::debug_handler]
+#[axum::debug_handler]
 async fn indexcss_get() -> impl IntoResponse {
     let markup = tokio::fs::read_to_string("src/index.css").await.unwrap();
 
@@ -52,7 +52,6 @@ async fn indexcss_get() -> impl IntoResponse {
         .body(markup)
         .unwrap()
 }
-
 
 #[axum::debug_handler]
 async fn cpus_get(State(state): State<AppState>) -> impl IntoResponse {
