@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+* {
+  font-family: 'Nunito', sans-serif;
+}
+
+body {
+  background-color: #f5ebe0;
+}
+
+.bar {
+  background: #e3d5ca;
+  width: 20em;
+  height: 2em;
+  margin: 1em;
+  display: flex;  
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.bar label {
+  z-index: 10;
+}
+
+.bar .bar-inner {
+  z-index: 5;
+  background: #d5bdaf;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  transition: 0.1s;
+}
