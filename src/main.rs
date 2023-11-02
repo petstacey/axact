@@ -1,7 +1,7 @@
-use axum::{routing::get, Router, Server};
+use axum::{Json, routing::get, Router, Server};
 use axum::extract::State;
+use axum::response::IntoResponse;
 use sysinfo::{CpuExt, System, SystemExt};
-use std::fmt::Write;
 use std::sync::{Arc, Mutex};
 
 #[tokio::main]
@@ -28,16 +28,11 @@ async fn root_get() -> &'static str {
     "Hello World"
 }
 
-async fn cpus_get(State(state): State<AppState>) -> String {
-    let mut s: String = String::new();
-
+#[axum::debug_handler]
+async fn cpus_get(State(state): State<AppState>) -> impl IntoResponse {
     let mut sys = state.sys.lock().unwrap();
     sys.refresh_cpu();
 
-    for (i, cpu) in sys.cpus().iter().enumerate() {
-        let i = i + 1;
-        let usage = cpu.cpu_usage();
-        writeln!(&mut s, "CPU {i} {usage:.2}%").unwrap();
-    }
-    s
+    let v: Vec<_> = sys.cpus().iter().map(|cpu| cpu.cpu_usage()).collect();
+    Json(v)
 }
